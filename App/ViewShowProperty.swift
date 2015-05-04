@@ -9,14 +9,31 @@
 import Foundation
 import UIKit
 
-class ViewShowProperty: UIViewController {
+class CustomTablePropertyCell : UITableViewCell {
+
+    @IBOutlet var key: UILabel!
+    @IBOutlet var value: UILabel!
+    
+    func loadItem(#key: String, value: String) {
+        self.key.text = key
+        self.value.text = value
+    }
+}
+
+class ViewShowProperty: UIViewController,UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet var titleProp: UILabel!
     @IBOutlet var frontImage: UIImageView!
+    @IBOutlet var tableView: UITableView!
     
+    var items: [(key: String, value: String)] = []
     var id = String()
     
     override func viewDidLoad() {
+        var nib = UINib(nibName: "CustomTablePropertyCell", bundle: nil)
+        
+        tableView.registerNib(nib, forCellReuseIdentifier: "customPropertyCell")
+        
         loadData()
     }
     
@@ -48,12 +65,50 @@ class ViewShowProperty: UIViewController {
                 let postT = post["title"]
                 self.titleProp.text = "\(postT)"
                 let property = post["realty"][0]
-                let type = property["type"]
-                let city = property["city"]
                 let pimage = property["frontImage"]
                 self.loadImage("\(pimage)")
-                println(type)
+                
+                let desc = post["description"]
+                self.items.append(key: "Description:", value: "\(desc)")
+                
+                let type = property["type"]
+                self.items.append(key: "Type:", value: "\(type)")
+                
+                let city = property["city"]
+                self.items.append(key: "City:", value: "\(city)")
+                
+                let region = property["region"]
+                self.items.append(key: "Region:", value: "\(region)")
+                
+                let address = property["address"]
+                self.items.append(key: "Address:", value: "\(address)")
+                
+                let owner = property["holder"]
+                self.items.append(key: "Owner:", value: "\(owner)")
+
+                self.tableView.reloadData()
             }
         }
     }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return items.count;
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell:CustomTablePropertyCell = self.tableView.dequeueReusableCellWithIdentifier("customPropertyCell") as CustomTablePropertyCell
+        
+        var (key, value) = items[indexPath.row]
+        
+        cell.loadItem(key: key, value: value)
+        
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {}
+    
+    func tableView(tableView:UITableView!, heightForRowAtIndexPath indexPath:NSIndexPath)->CGFloat {
+        return 40
+    }
+
 }

@@ -98,7 +98,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             controller.searchBar.delegate = self
             
             return controller
-        })()        
+        })()
     }
     
     func loadData(criteria: String) {

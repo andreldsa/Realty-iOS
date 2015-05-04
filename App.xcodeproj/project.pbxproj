@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6317D5DA1AF5227600CBF623 /* ViewShowProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6317D5D91AF5227600CBF623 /* ViewShowProperty.swift */; };
+		6334883C1AF7E42900A44D19 /* CustomTablePropertyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6334883B1AF7E42900A44D19 /* CustomTablePropertyCell.xib */; };
 		63E3181F1AEFB89300322D09 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E3181E1AEFB89300322D09 /* AppDelegate.swift */; };
 		63E318211AEFB89300322D09 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E318201AEFB89300322D09 /* ViewController.swift */; };
 		63E318241AEFB89300322D09 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63E318221AEFB89300322D09 /* Main.storyboard */; };
@@ -32,6 +33,7 @@
 
 /* Begin PBXFileReference section */
 		6317D5D91AF5227600CBF623 /* ViewShowProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewShowProperty.swift; sourceTree = "<group>"; };
+		6334883B1AF7E42900A44D19 /* CustomTablePropertyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomTablePropertyCell.xib; sourceTree = "<group>"; };
 		63E318191AEFB89300322D09 /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63E3181D1AEFB89300322D09 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63E3181E1AEFB89300322D09 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 				63E318271AEFB89300322D09 /* LaunchScreen.xib */,
 				63E3181C1AEFB89300322D09 /* Supporting Files */,
 				63E318421AEFBABF00322D09 /* CustomTableViewCell.xib */,
+				6334883B1AF7E42900A44D19 /* CustomTablePropertyCell.xib */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 				63E318291AEFB89300322D09 /* LaunchScreen.xib in Resources */,
 				63E318431AEFBABF00322D09 /* CustomTableViewCell.xib in Resources */,
 				63E318261AEFB89300322D09 /* Images.xcassets in Resources */,
+				6334883C1AF7E42900A44D19 /* CustomTablePropertyCell.xib in Resources */,
 				63E318521AEFF6F400322D09 /* loading.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
