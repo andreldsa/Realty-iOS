@@ -65,13 +65,15 @@ class CustomTableViewCell : UITableViewCell {
     }
 }
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating {
     
     @IBOutlet var tableView: UITableView!
     
     var items: [(title: String, image: String, id: String)] = []
     
     var imageCache = SharedDictionary<String, NSData>()
+    
+    var resultSearchController = UISearchController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,11 +81,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         tableView.registerNib(nib, forCellReuseIdentifier: "customCell")
         
-        loadData()
+        self.resultSearchController = ({
+            let controller = UISearchController(searchResultsController: nil)
+            controller.searchResultsUpdater = self
+            controller.dimsBackgroundDuringPresentation = false
+            controller.searchBar.sizeToFit()
+            
+            self.tableView.tableHeaderView = controller.searchBar
+            
+            return controller
+        })()
+        
+        loadData("")
+        
     }
     
-    func loadData() {
-        APIService().getAll {
+    func loadData(criteria: String) {
+        APIService().getAll(criteria) {
             (data, error) -> Void in
             
             let results = data["results"]
@@ -104,7 +118,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     @IBAction func refresh(sender: AnyObject) {
         self.items = []
-        loadData()
+        loadData("")
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -136,6 +150,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(tableView:UITableView!, heightForRowAtIndexPath indexPath:NSIndexPath)->CGFloat {
         return 240
+    }
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        println(searchController.searchBar.text)
+        self.items = []
+        loadData(searchController.searchBar.text)
     }
 }
 
