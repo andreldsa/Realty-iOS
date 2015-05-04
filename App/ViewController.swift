@@ -30,15 +30,12 @@ class CustomTableViewCell : UITableViewCell {
     @IBOutlet var titleLabel: UILabel!
     
     func loadItem(#title: String, image: String, cache: SharedDictionary<String, NSData>) {
-        println("loading item: \(title)")
-
         backgroundImage.contentMode = UIViewContentMode.ScaleAspectFit
         
         titleLabel.text = title
         
         var cached = cache.getItem(key: image)
         if(cached != nil) {
-            println("from cache")
             self.backgroundImage.image = UIImage(data: cached)
         } else {
             self.backgroundImage.image = UIImage(named:  "loading.gif")
@@ -65,9 +62,12 @@ class CustomTableViewCell : UITableViewCell {
     }
 }
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate {
     
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var search: UISearchBar!
+    
+    var clicked = false
     
     var items: [(title: String, image: String, id: String)] = []
     
@@ -75,32 +75,43 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     var resultSearchController = UISearchController()
 
+    override func viewDidAppear(animated: Bool) {
+        loadData("")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         var nib = UINib(nibName: "CustomTableViewCell", bundle: nil)
         
         tableView.registerNib(nib, forCellReuseIdentifier: "customCell")
-        
+
         self.resultSearchController = ({
             let controller = UISearchController(searchResultsController: nil)
             controller.searchResultsUpdater = self
             controller.dimsBackgroundDuringPresentation = false
             controller.searchBar.sizeToFit()
+            controller.searchBar.showsSearchResultsButton = true
+            controller.searchBar.searchBarStyle = UISearchBarStyle.Minimal
             
             self.tableView.tableHeaderView = controller.searchBar
             
+            controller.searchBar.delegate = self
+            
             return controller
-        })()
-        
-        loadData("")
-        
+        })()        
     }
     
     func loadData(criteria: String) {
+        self.items = []
         APIService().getAll(criteria) {
             (data, error) -> Void in
             
             let results = data["results"]
+            
+            if(results.count == 0) {
+                self.showAlert()
+            }
+            
             for var index = 0; index < results.count; ++index {
                 let post = results[index]
                 let property = post["realty"][0]
@@ -115,9 +126,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             self.tableView.reloadData()
         }
     }
+    
+    func showAlert() {
+        let alert = UIAlertView()
+        alert.title = "Alert"
+        alert.message = "Nothing was found."
+        alert.addButtonWithTitle("Ok")
+        alert.show()
+    }
 
     @IBAction func refresh(sender: AnyObject) {
-        self.items = []
         loadData("")
     }
     override func didReceiveMemoryWarning() {
@@ -145,6 +163,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         var viewController = storyboard.instantiateViewControllerWithIdentifier("showProperty") as ViewShowProperty
         viewController.id = items[indexPath.row].id
+        
+        self.resultSearchController.active = false
+        
         self.showViewController(viewController, sender: viewController)
     }
     
@@ -153,9 +174,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        println(searchController.searchBar.text)
-        self.items = []
-        loadData(searchController.searchBar.text)
+        if(self.clicked) {
+            loadData(searchController.searchBar.text)
+            self.clicked = false
+        }
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        self.clicked = true
+        self.updateSearchResultsForSearchController(resultSearchController)
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        self.loadData("")
     }
 }
 
