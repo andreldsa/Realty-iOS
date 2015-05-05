@@ -28,15 +28,19 @@ class SharedDictionary<KeyType : Hashable, ValueType> {
 class CustomTableViewCell : UITableViewCell {
     @IBOutlet var backgroundImage: UIImageView!
     @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var desc: UILabel!
     
-    func loadItem(#title: String, image: String, cache: SharedDictionary<String, NSData>) {
-        backgroundImage.contentMode = UIViewContentMode.ScaleAspectFit
+    func loadItem(#title: String, image: String, desc: String, cache: SharedDictionary<String, NSData>) {
+        self.backgroundImage.contentMode = UIViewContentMode.ScaleAspectFill
         
-        titleLabel.text = title
+        self.titleLabel.text = title
+        self.desc.text = desc
         
         var cached = cache.getItem(key: image)
         if(cached != nil) {
             self.backgroundImage.image = UIImage(data: cached)
+            self.backgroundImage.layer.cornerRadius = (self.backgroundImage.frame.height/2)
+            self.backgroundImage.clipsToBounds = true
         } else {
             self.backgroundImage.image = UIImage(named:  "loading.gif")
 
@@ -51,7 +55,10 @@ class CustomTableViewCell : UITableViewCell {
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!) -> Void in
                     if !(error? != nil) {
                         self.backgroundImage.image = UIImage(data: data)
+                        self.backgroundImage.layer.cornerRadius = (self.backgroundImage.frame.height/2)
+                        self.backgroundImage.clipsToBounds = true
                         cache.addItem(key: image, value: data)
+                        
                     }
                     else {
                         println("Error: \(error.localizedDescription)")
@@ -69,7 +76,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     var clicked = false
     
-    var items: [(title: String, image: String, id: String)] = []
+    var items: [(title: String, image: String, desc: String, id: String)] = []
     
     var imageCache = SharedDictionary<String, NSData>()
     
@@ -84,6 +91,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         var nib = UINib(nibName: "CustomTableViewCell", bundle: nil)
         
         tableView.registerNib(nib, forCellReuseIdentifier: "customCell")
+        
 
         self.resultSearchController = ({
             let controller = UISearchController(searchResultsController: nil)
@@ -119,8 +127,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 let city = property["city"]
                 let id = post["_id"]
                 let ptitle = post["title"]
+                let pdesc = post["description"]
                 let pimage = property["frontImage"]
-                self.items.append(title: "\(ptitle)", image: "\(pimage)", id: "\(id)")
+                self.items.append(title: "\(ptitle)", image: "\(pimage)", desc: "\(pdesc)", id: "\(id)")
             }
             
             self.tableView.reloadData()
@@ -150,9 +159,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell:CustomTableViewCell = self.tableView.dequeueReusableCellWithIdentifier("customCell") as CustomTableViewCell
         
-        var (title, image, id) = items[indexPath.row]
+        var (title, image, desc, id) = items[indexPath.row]
         
-        cell.loadItem(title: title, image: image, cache: imageCache)
+        cell.loadItem(title: title, image: image, desc: desc, cache: imageCache)
         
         return cell
     }
@@ -170,7 +179,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(tableView:UITableView!, heightForRowAtIndexPath indexPath:NSIndexPath)->CGFloat {
-        return 240
+        return 90
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
