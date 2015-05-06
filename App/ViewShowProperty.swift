@@ -95,6 +95,14 @@ class ViewShowProperty: UIViewController,UITableViewDataSource, UITableViewDeleg
         return items.count;
     }
     
+    func showAlert(key: String, value: String) {
+        let alert = UIAlertView()
+        alert.title = key
+        alert.message = value
+        alert.addButtonWithTitle("Close")
+        alert.show()
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell:CustomTablePropertyCell = self.tableView.dequeueReusableCellWithIdentifier("customPropertyCell") as CustomTablePropertyCell
         
@@ -105,10 +113,13 @@ class ViewShowProperty: UIViewController,UITableViewDataSource, UITableViewDeleg
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {}
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var (key, value) = items[indexPath.row]
+        self.showAlert(key, value: value)
+    }
     
     func tableView(tableView:UITableView!, heightForRowAtIndexPath indexPath:NSIndexPath)->CGFloat {
-        return 40
+        return 60
     }
 
 }
