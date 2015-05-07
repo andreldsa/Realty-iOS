@@ -117,7 +117,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             let results = data["results"]
             
             if(results.count == 0) {
-                self.showAlert()
+                self.showAlert("Alert", message: "Nothing was found.")
             }
             
             for var index = 0; index < results.count; ++index {
@@ -136,10 +136,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
-    func showAlert() {
+    func showAlert(title: String, message: String) {
         let alert = UIAlertView()
-        alert.title = "Alert"
-        alert.message = "Nothing was found."
+        alert.title = title
+        alert.message = message
         alert.addButtonWithTitle("Ok")
         alert.show()
     }
@@ -184,7 +184,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         if(self.clicked) {
-            loadData(searchController.searchBar.text)
+            let text = searchController.searchBar.text
+            if(text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) != "") {
+                loadData(text)
+            } else {
+                showAlert("Error", message: "You must type something to search.")
+            }
             self.clicked = false
         }
     }

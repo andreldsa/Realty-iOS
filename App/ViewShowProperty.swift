@@ -122,4 +122,10 @@ class ViewShowProperty: UIViewController,UITableViewDataSource, UITableViewDeleg
         return 60
     }
 
+    @IBAction func sendComment(sender: AnyObject) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        var viewController = storyboard.instantiateViewControllerWithIdentifier("sendComment") as ViewSendComment
+        viewController.id = self.id
+        self.showViewController(viewController, sender: viewController)
+    }
 }

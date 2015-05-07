@@ -19,6 +19,7 @@
 		63E318411AEFB8BF00322D09 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E318401AEFB8BF00322D09 /* SwiftyJSON.swift */; };
 		63E318431AEFBABF00322D09 /* CustomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63E318421AEFBABF00322D09 /* CustomTableViewCell.xib */; };
 		63E318521AEFF6F400322D09 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 63E318511AEFF6F400322D09 /* loading.gif */; };
+		63F3996B1AFBD70D005917CB /* ViewSendComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F3996A1AFBD70D005917CB /* ViewSendComment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		63E318401AEFB8BF00322D09 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = ../../SwiftyJSON.swift; sourceTree = "<group>"; };
 		63E318421AEFBABF00322D09 /* CustomTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomTableViewCell.xib; sourceTree = "<group>"; };
 		63E318511AEFF6F400322D09 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = loading.gif; path = ../loading.gif; sourceTree = "<group>"; };
+		63F3996A1AFBD70D005917CB /* ViewSendComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewSendComment.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 				63E3181C1AEFB89300322D09 /* Supporting Files */,
 				63E318421AEFBABF00322D09 /* CustomTableViewCell.xib */,
 				6334883B1AF7E42900A44D19 /* CustomTablePropertyCell.xib */,
+				63F3996A1AFBD70D005917CB /* ViewSendComment.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -233,6 +236,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63F3996B1AFBD70D005917CB /* ViewSendComment.swift in Sources */,
 				63E318211AEFB89300322D09 /* ViewController.swift in Sources */,
 				63E3183F1AEFB8AE00322D09 /* APIService.swift in Sources */,
 				63E3181F1AEFB89300322D09 /* AppDelegate.swift in Sources */,
