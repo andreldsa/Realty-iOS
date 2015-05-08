@@ -20,6 +20,8 @@
 		63E318431AEFBABF00322D09 /* CustomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63E318421AEFBABF00322D09 /* CustomTableViewCell.xib */; };
 		63E318521AEFF6F400322D09 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 63E318511AEFF6F400322D09 /* loading.gif */; };
 		63F3996B1AFBD70D005917CB /* ViewSendComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F3996A1AFBD70D005917CB /* ViewSendComment.swift */; };
+		63F3996C1AFCEBD7005917CB /* APIService.swift in Resources */ = {isa = PBXBuildFile; fileRef = 63E3183E1AEFB8AE00322D09 /* APIService.swift */; };
+		63F3996D1AFCEBD7005917CB /* SwiftyJSON.swift in Resources */ = {isa = PBXBuildFile; fileRef = 63E318401AEFB8BF00322D09 /* SwiftyJSON.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -213,6 +215,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63F3996C1AFCEBD7005917CB /* APIService.swift in Resources */,
+				63F3996D1AFCEBD7005917CB /* SwiftyJSON.swift in Resources */,
 				63E318241AEFB89300322D09 /* Main.storyboard in Resources */,
 				63E318291AEFB89300322D09 /* LaunchScreen.xib in Resources */,
 				63E318431AEFBABF00322D09 /* CustomTableViewCell.xib in Resources */,
